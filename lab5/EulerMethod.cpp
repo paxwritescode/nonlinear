@@ -1,13 +1,13 @@
 #include "EulerMethod.h"
 #include "constants.h"
 
-double* EulerMethod(double a, double b, double h, double t, double (*f)(double, double, double))
+double *EulerMethod(double a, double b, double h, double t, double (*f)(double, double, double))
 {
     double cur_x = a + h;
-    double* y_res = NULL;
+    double *y_res = NULL;
 
-    y_res = (double*)calloc((b - a) / h, sizeof(double));
-    y_res[0] = y_0;
+    y_res = (double *)calloc((b - a) / h, sizeof(double));
+    y_res[0] = Y_0;
 
     int i = 1;
 
