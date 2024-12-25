@@ -1,0 +1,3 @@
+/Users/paks/Polytech/semester9/nonlinear/lab5/build/CMakeFiles/lab5.dir
+/Users/paks/Polytech/semester9/nonlinear/lab5/build/CMakeFiles/edit_cache.dir
+/Users/paks/Polytech/semester9/nonlinear/lab5/build/CMakeFiles/rebuild_cache.dir
