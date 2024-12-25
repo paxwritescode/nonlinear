@@ -1,10 +1,15 @@
 #include <iostream>
-#include "lab5.h"
+
+#include "EulerMethod.h"
+#include "constants.h"
+#include "functions.h"
 
 int main(void)
 {
-    double x;
-    std::cin >> x;
-    std::cout << f(x);
-    return 0;
+   double* EulerResult = EulerMethod(A, B, h_1, t_1, f);
+   int N = int((B - A) / h_1);
+   for (int i = 0; i < N; i++)
+   {
+    std::cout << EulerResult[i] << ", ";
+   }
 }
