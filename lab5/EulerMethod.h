@@ -2,4 +2,4 @@
 
 #include <cstdlib>
 
-double* EulerMethod(double a, double b, double h, double t, double (*f)(double, double, double));
+double* EulerMethod(double a, double b, double h, double t, double (*f)(double, double, int));

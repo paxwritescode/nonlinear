@@ -1,7 +1,7 @@
 #include "EulerMethod.h"
 #include "constants.h"
 
-double *EulerMethod(double a, double b, double h, double t, double (*f)(double, double, double))
+double *EulerMethod(double a, double b, double h, double t, double (*f)(double, double, int))
 {
     double cur_x = a + h;
     double *y_res = NULL;
