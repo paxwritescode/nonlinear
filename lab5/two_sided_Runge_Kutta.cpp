@@ -29,36 +29,29 @@ void PrintTwoSidedRungeKuttaSolution(double h, int t, double(*f)(double, double,
     std::vector<double> y_mins = {Y_0};
     std::vector<double> y_maxs = {Y_0};
 
+    double y_min = Y_0;
+    double y_max = Y_0;
+
     std::cout << std::fixed << std::setprecision(6);
 
     for (int i = 1; i <= n; i++)
     {
-        std::vector <double> new_values;
-        for (double y : values)
-        {
-            new_values.push_back(RungeKuttaScheme1(x, y, h, t, f));
-            std::cout << "RK S1: " << RungeKuttaScheme1(x, y, h, t, f) << std::endl;
-            new_values.push_back(RungeKuttaScheme2(x, y, h, t, f));
-            std::cout << "RK S2: " << RungeKuttaScheme2(x, y, h, t, f) << std::endl;
+        double y1_min = RungeKuttaScheme1(x, y_min, h, t, f);
+        double y1_max = RungeKuttaScheme1(x, y_max, h, t, f);
 
-        }
-        values = new_values;
-        double y_min = *std::min_element(values.begin(), values.end());
-        double y_max = *std::max_element(values.begin(), values.end());
+        double y2_min = RungeKuttaScheme2(x, y_min, h, t, f);
+        double y2_max = RungeKuttaScheme2(x, y_max, h, t, f);
 
-        std::cout << "Count of values: " << values.size() << "\n";
-        std::cout << "values: ";
-        for (int i = 0; i < values.size(); i++)
-        {
-            std::cout << values[i] << ", ";
-        }
-        std::cout << std::endl;
+        y_min = std::min({y1_min, y1_max, y2_min, y2_max});
+        y_max = std::max({y1_min, y1_max, y2_min, y2_max});
 
         y_mins.push_back(y_min);
-        y_maxs.push_back(y_max);      
+        y_maxs.push_back(y_max);   
 
-        x += h;  
+        x += h;        
     }
+
+
 
     std::cout << "y_mins:" << std::endl;
     for (int i = 0; i <= n; i++)
@@ -70,5 +63,5 @@ void PrintTwoSidedRungeKuttaSolution(double h, int t, double(*f)(double, double,
     for (int i = 0; i <= n; i++)
     {
         std::cout << y_maxs[i] << ", ";
-    }
+    }    
 }

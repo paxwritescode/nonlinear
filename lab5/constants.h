@@ -6,7 +6,8 @@
 #define T_1 1
 #define T_2 10
 
-#define H_0 0.5
+#define H_TEST 0.5
+#define H_0 0.25
 #define H_1 0.01
 #define H_2 0.005
 #define H_3 0.0025
