@@ -19,7 +19,7 @@ double RungeKuttaScheme2(double x, double y, double h, int t, double(*f)(double,
     return y + h * (P_1_2 * K_1 + P_2_2 * K_2 + P_3_2 * K_3);
 }
 
-void PrintTwoSidedRungeKuttaSolution(double h, int t, double(*f)(double, double, int))
+void PrintTwoSidedRungeKuttaSolution(double h, int t, double(*f)(double, double, int), std::ofstream& outFile)
 {
     int n = static_cast<int>((B - A) / h);
     
@@ -53,15 +53,15 @@ void PrintTwoSidedRungeKuttaSolution(double h, int t, double(*f)(double, double,
 
 
 
-    std::cout << "y_mins:" << std::endl;
+    outFile << "y_mins:" << std::endl;
     for (int i = 0; i <= n; i++)
     {
-        std::cout << y_mins[i] << ", ";
+        outFile << y_mins[i] << ", ";
     }
 
-    std::cout << std::endl << "y_maxs:" << std::endl;
+    outFile << std::endl << "y_maxs:" << std::endl;
     for (int i = 0; i <= n; i++)
     {
-        std::cout << y_maxs[i] << ", ";
+        outFile << y_maxs[i] << ", ";
     }    
-}
+    }

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 #include "EulerMethod.h"
 #include "constants.h"
@@ -7,26 +8,38 @@
 
 int main(void)
 {
-   std::cout << "Two Sided Runge-Kutta Method, h = " << H_TEST << std::endl;
+   std::ofstream TwoSidedOutFile("TwoSidedOut.txt");
 
-   PrintTwoSidedRungeKuttaSolution(H_TEST, T_1, f);
+   TwoSidedOutFile << "Two Sided Runge-Kutta Method, h = " << H_TEST << std::endl;
 
-   std::cout << std::endl << std::endl;
+   PrintTwoSidedRungeKuttaSolution(H_TEST, T_1, f, TwoSidedOutFile);
 
-   std::cout << "Two Sided Runge-Kutta Method, h = " << H_0 << std::endl;
+   TwoSidedOutFile << std::endl << std::endl;
 
-   PrintTwoSidedRungeKuttaSolution(H_0, T_1, f);
+   TwoSidedOutFile << "Two Sided Runge-Kutta Method, h = " << H_0 << std::endl;
 
-   std::cout << std::endl << std::endl;
+   PrintTwoSidedRungeKuttaSolution(H_0, T_1, f, TwoSidedOutFile);
 
-   std::cout << "Two Sided Runge-Kutta Method, h = " << H_1 << std::endl;
+   TwoSidedOutFile << std::endl << std::endl;
 
-   PrintTwoSidedRungeKuttaSolution(H_1, T_1, f);
+   TwoSidedOutFile << "Two Sided Runge-Kutta Method, h = " << H_1 << std::endl;
 
-   std::cout << std::endl << std::endl;
+   PrintTwoSidedRungeKuttaSolution(H_1, T_1, f, TwoSidedOutFile);
 
-   std::cout << "Two Sided Runge-Kutta Method, h = " << H_2 << std::endl;
+   TwoSidedOutFile << std::endl << std::endl;
 
-   PrintTwoSidedRungeKuttaSolution(H_2, T_1, f);
+   TwoSidedOutFile << "Two Sided Runge-Kutta Method, h = " << H_2 << std::endl;
+
+   PrintTwoSidedRungeKuttaSolution(H_2, T_1, f, TwoSidedOutFile);
+
+   TwoSidedOutFile << std::endl << std::endl;
+
+   TwoSidedOutFile << "Two Sided Runge-Kutta Method, h = " << H_2 << std::endl;
+
+   PrintTwoSidedRungeKuttaSolution(H_2, T_1, f, TwoSidedOutFile);
+
+   std::cout << "Two Sided RUnge-Kutta: done" << std::endl;
+
+   TwoSidedOutFile.close();
 
 }
