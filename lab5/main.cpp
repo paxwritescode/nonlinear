@@ -11,15 +11,15 @@ void DoEuler(double h, int t, std::ofstream &outFile)
    double *EulerRes = EulerMethod(A, B, h, t, f);
    int n = int((B - A) / h);
    outFile << "Euler Method, h = " << h << ", t = " << t << std::endl;
-   for (int i = 0; i < n; i++)
+   for (int i = 0; i <= n; i++)
    {
       outFile << EulerRes[i] << ", ";
    }
    outFile << std::endl;
    outFile << "Numerical Error" << std::endl;
-   for (int i = 0; i < n; i++)
+   for (int i = 0; i <= n; i++)
    {
-      outFile << EulerRes[i] - y_exact(A + i * h, t) << ", ";
+      outFile << fabs(EulerRes[i] - y_exact(A + i * h, t)) << ", ";
    }
    outFile << std::endl
            << std::endl;
@@ -33,7 +33,7 @@ void DoTwoSidedRungeKutta(double h, int t, std::ofstream &outFile)
    PrintTwoSidedRungeKuttaSolution(h, t, f, outFile);
 
    outFile << std::endl
-                   << std::endl;   
+           << std::endl;
 }
 
 int main(void)

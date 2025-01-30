@@ -64,4 +64,10 @@ void PrintTwoSidedRungeKuttaSolution(double h, int t, double(*f)(double, double,
     {
         outFile << y_maxs[i] << ", ";
     }    
-    }
+
+    outFile << std::endl << "difference:" << std::endl;
+    for (int i = 0; i <= n; i++)
+    {
+        outFile << y_maxs[i] - y_mins[i] << ", ";
+    }    
+}

@@ -3,10 +3,10 @@
 
 double *EulerMethod(double a, double b, double h, double t, double (*f)(double, double, int))
 {
-    double cur_x = a + h;
+    double cur_x = a;
     double *y_res = NULL;
 
-    y_res = (double *)calloc((b - a) / h, sizeof(double));
+    y_res = (double *)calloc((b - a) / h + 1, sizeof(double));
     y_res[0] = Y_0;
 
     int i = 1;
