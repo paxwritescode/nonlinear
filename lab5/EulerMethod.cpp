@@ -13,7 +13,7 @@ double *EulerMethod(double a, double b, double h, double t, double (*f)(double, 
 
     while (cur_x <= b)
     {
-        y_res[i] = y_res[i - 1] + h * f(cur_x - h, y_res[i - 1], t);
+        y_res[i] = y_res[i - 1] + h * f(cur_x, y_res[i - 1], t);
         i++;
         cur_x += h;
     }
