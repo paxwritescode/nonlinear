@@ -1,0 +1,187 @@
+\section{Постановка задачи}
+Необходимо на основе метода Рунге-Кутты построить двусторонние оценки решения следующей задачи Коши:
+$$
+\begin{cases}
+	y'(x) = y cos(tx) \\
+	y(0) = 1
+\end{cases}
+$$
+Точным решением этой задачи является функция $y(x) = e^{\frac{sin(tx)}{t}}$.
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{img/exact/exact1.png}
+		\caption{$t = 1$}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{img/exact/exact2.png}
+		\caption{$t = 10$}
+	\end{subfigure}
+	\caption{Точное решение задачи Коши при различных значениях параметра}
+	\label{fig:two_graphs}
+\end{figure}
+
+\section{Цель работы}
+Требуется на примере данной задачи исследовать эффективность двустороннего метода и сравнить его с методом Эйлера. Сравнение методоы нужно провести при различных значениях параметра $t$, рассмотрев сетки с шагом $h = 0.01, \: h = 0.005 \: \text{и} \: h = 0.0025$.
+
+\section{Алгоритмы методов}
+Поставлена задача Коши:
+$$
+\begin{cases}
+	y'(x) = f(x, y) \\
+	y(a) = y_0
+\end{cases}
+$$
+Необходимо вычислить значения функции $y$ на множестве узлов $\{x_i\}_{i = 0}^n$, где $x_0 = a, \: x_n = b \: \text{и} \: x_i < x_{i + 1}.$
+В данной лабораторной работе рассматриваются вычислительные схемы, относящиеся к группе методов Рунге-Кутты. Они основаны на использовании для перехода от узла $x_i$ к узлу $x_{i+1}$ определенного количества слагаемых из разложения функции $y$ в ряд Тейлора:
+\[
+y(x + h) = y(x) + h y'(x) + \frac{h^2}{2} y''(x) + \frac{h^3}{6} y'''(x) + \dots,
+\]
+
+где $x = x_i$, $h = x_{i+1} - x_i$.
+\subsection{Метод Эйлера}
+Метод Эйлера является простейшим из группы методов Рунге-Кутты. Его вычислительная схема выглядит следующим образом:
+$$y(x + h) \approx y(x) + h f(x, y)$$
+\subsection{Двусторонний метод Рунге-Кутты}
+Двусторонний метод использует две независимые аппроксимации решения с различными коэффициентами, что позволяет получить верхнюю и нижнюю границы для значения $y(x)$ на каждом шаге.\\
+\underline{Первый шаг метода: двусторонние оценки для $x_1$.}\\
+Вычислим три промежуточных значения:
+$$K_1 = f(x, y)$$
+$$K_2 = f(x + h \alpha_2, y + h \beta_{21}K_1)$$
+$$K_3 = f(x + h \alpha_3, y + h(\beta_{31}K_1 + \beta_{32} K_2)),$$
+где $\alpha_2, \: \alpha_3, \: \beta_{21}, \: \beta_{31}, \beta_{32}$ - коэффициенты метода, обеспечивающие его порядок точности.
+На основе этих значений строятся две различные оценки для $y(x_1) = y(x_0 + h)$:
+\[
+y^{(1)}(x + h) = y(x) + h (p_1 K_1 + p_2 K_2 + p_3 K_3)
+\]
+\[
+y^{(2)}(x + h) = y(x) + h (\tilde{p}_1 K_1 + \tilde{p}_2 K_2 + \tilde{p}_3 K_3)
+\]
+Коэффициенты $p_1, \: p_2, \: p_3 \; \text{и} \; \tilde{p}_1, \tilde{p}_2, \: \tilde{p}_3 $ подобраны так, чтобы одна из формул переоценивала точное решение, а другая - недооценивала его.\\
+В результате на первом узле $x_1$ получаем две границы для точного значения:
+$$min(y^{(1)}, y^{(2)}) \leqslant y(x_1) \leqslant max(y^{(1)}, y^{(2)})$$
+Таким образом, на первом узле мы получаем 2 приближённых значения.\\
+\underline{Построение двусторонней оценки на i-м узле}\\
+На каждом шаге строятся два новых значения на основе каждого из полученных на предыдущем шаге. Таким образом, на каждом следующем шаге количество аппроксимаций удваивается, следовательно, на i-м узле получается $2^i$ значений. Среди них выбираются максимальное и минимальное. Эти границы обеспечивают интервал, в который попадёт точка решения.
+
+\section{Результаты}
+\subsection{Визуализация двусторонних оценок}
+Построим графики решения ДУ двусторонним методом Рунге-Кутты. Для наглядности выберем малое число узлов.
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{img/visualization/TwoSided3nodest1}
+		\caption{$t = 1$}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{img/visualization/TwoSided3nodest2}
+		\caption{$t = 10$}
+	\end{subfigure}
+	\caption{Двусторонние оценки при 5 узлах и различных значениях параметра}
+	\label{fig:two_graphs}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{img/visualization/TwoSided5nodest1}
+		\caption{$t = 1$}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{img/visualization/TwoSided5nodest2}
+		\caption{$t = 10$}
+	\end{subfigure}
+	\caption{Двусторонние оценки при 5 узлах и различных значениях параметра}
+	\label{fig:two_graphs}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{img/visualization/TwoSided11nodest1}
+		\caption{$t = 1$}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{img/visualization/TwoSided11nodest2}
+		\caption{$t = 10$}
+	\end{subfigure}
+	\caption{Двусторонние оценки при 11 узлах и различных значениях параметра}
+	\label{fig:two_graphs}
+\end{figure}
+
+\subsection{Сравнение погрешностей метода Эйлера и двустороннего метода Рунге-Кутты}
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{img/errorEulerAndDifferenceBtwEstimates/ErrEuDifRK11}
+		\caption{$t = 1$}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{img/errorEulerAndDifferenceBtwEstimates/ErrEuDifRK12}
+		\caption{$t = 10$}
+	\end{subfigure}
+	\caption{Двусторонние оценки при 101 узлах и различных значениях параметра}
+	\label{fig:two_graphs}
+\end{figure}
+
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{img/errorEulerAndDifferenceBtwEstimates/ErrEuDifRK21}
+		\caption{$t = 1$}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{img/errorEulerAndDifferenceBtwEstimates/ErrEuDifRK22}
+		\caption{$t = 10$}
+	\end{subfigure}
+	\caption{Двусторонние оценки при 201 узлах и различных значениях параметра}
+	\label{fig:two_graphs}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{img/errorEulerAndDifferenceBtwEstimates/ErrEuDifRK31}
+		\caption{$t = 1$}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{img/errorEulerAndDifferenceBtwEstimates/ErrEuDifRK32}
+		\caption{$t = 10$}
+	\end{subfigure}
+	\caption{Двусторонние оценки при 401 узлах и различных значениях параметра}
+	\label{fig:two_graphs}
+\end{figure}
+
+
+\section {Выводы}
+% В ходе выполнения работы был реализован алгоритм двустороннего метода Рунге-Кутты, затем была исследована его эффективность и проведено сравнение метода Рунге-Кутты с методом Эйлера на примере двух задач Коши с известным точным решением.
+% По результатам исследования можно заметить, что метод Рунге-Кутты превосходит метод Эйлера по точности. Если при решении задачи, точное решение которой имеет производную одного знака на данном отрезке, преимущество двустороннего метода Рунге-Кутты не так заметно (разница в 2-3 порядка), то на задаче, производная решения которой меняет знак, преимущество двустороннего метода Рунге-Кутты является неоспоримым, метод Эйлера к такой задаче практически неприменим из-за большой ошибки, а метод Рунге-Кутты даёт практически такие же результаты, как на задаче с производной одного знака.
+% К недостаткам двустороннего метода Рунге-Кутты нужно отнести его трудоёмкость: на узле с номером $i$ требуется находить минимум и максимум среди $2^i$ значений, что требует больших вычислительных затрат.
+
+В ходе выполнения работы был реализован алгоритм двустороннего метода Рунге-Кутты, проведено исследование его эффективности и выполнено сравнение с методом Эйлера на примере двух задач Коши с известным точным решением.
+
+Анализ результатов показал, что метод Рунге-Кутты значительно превосходит метод Эйлера по точности. В случае задачи, точное решение которой имеет производную одного знака на заданном отрезке, преимущество двустороннего метода выражается в разнице порядка 2–3 десятичных разрядов. Однако при решении задачи, в которой производная изменяет знак, двусторонний метод Рунге-Кутты демонстрирует явное превосходство: метод Эйлера оказывается практически неприменим из-за высокой ошибки, в то время как метод Рунге-Кутты остаётся работоспособным и даёт значительно более точные результаты. При этом наблюдается небольшое снижение точности по сравнению с задачей, где производная не меняет знак.
+
+Основным недостатком двустороннего метода Рунге-Кутты является его высокая вычислительная сложность. На узле с номером $i$i необходимо определять минимум и максимум среди $2^i$ значений, что значительно увеличивает затраты на вычисления.
